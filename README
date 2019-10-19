@@ -1,0 +1,12 @@
+# Legacy migration by means of microservices
+## Introduction
+
+This repository was created to demonstrate how migration of legacy systems can be done without the standard ETL approach.
+
+## Set-up
+
+To get started run the _docker-compose_:
+
+```bash
+docker-compose up
+```
