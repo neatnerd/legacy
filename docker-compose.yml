@@ -5,23 +5,31 @@ services:
     environment: 
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
+    ports:
+      - 5432:5432
     volumes:
       - ./init-db/crm/init.sql:/data/init-crm.sql
       - ./init-db/crm/init.sh:/docker-entrypoint-initdb.d/install.sh
-    ports:
-      - 8001:5432
+      - ./data/postgres:/var/lib/postgresql/data
   tx:
     build: ./init-db/tx
-    privileged: true # important flag, otherwise will not be able to remount db folder
+    privileged: true
     environment:
       LICENSE: accept
       DB2INST1_PASSWORD: admin
       DBNAME: tx
     ports:
-      - 8002:50000
+      - 50000:50000
+    volumes:
+      - ./data/db2:/database:z
   account:
-    image: mysql
+    image: oracle/database:12.2.0.1-se2
     environment:
-      MYSQL_ROOT_PASSWORD: 'admin'
+      ORACLE_SID: CORE
+      ORACLE_PDB: ACCOUNTS
     ports:
-      - 8003:3306  
+      - 1521:1521
+      - 5500:5500
+    volumes:
+      - ./data/oracle:/opt/oracle/oradata  
+      - ./init-db/account/setup:/opt/oracle/scripts/setup

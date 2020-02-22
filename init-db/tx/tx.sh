@@ -1,3 +1,3 @@
 echo "(!) Connecting to DB & Creating tables..."
-su - db2inst1 -c "db2 connect to tx && db2 -tvf /data/tx.sql"
+su - db2inst1 -c "/database/config/db2inst1/sqllib/bin/db2 -tvf /var/custom/tx.sql"
 echo "(!) Initialize complete"
